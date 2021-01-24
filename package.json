@@ -1,0 +1,56 @@
+{
+  "name": "mappy-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir dist",
+    "dev": "nodemon --exec npm run restart",
+    "restart": "rm -rf dist && npm run build && npm run start",
+    "start": "node dist/index.js",
+    "test": "jest --testTimeout=10000 --runInBand --forceExit --detectOpenHandles --no-cache",
+    "lint": "./node_modules/.bin/eslint src/**/*.js",
+    "postinstall": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SachaHerszkorn/catmash-api.git"
+  },
+  "author": "herszkorn.sacha",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SachaHerszkorn/catmash-api/issues"
+  },
+  "homepage": "https://github.com/SachaHerszkorn/catmash-api#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.8",
+    "@babel/core": "^7.12.9",
+    "@babel/node": "^7.12.6",
+    "@babel/preset-env": "^7.12.7",
+    "@shelf/jest-mongodb": "^1.2.3",
+    "@types/jest": "^26.0.15",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.14.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
+    "jest": "^26.6.3",
+    "prettier": "^2.2.0",
+    "supertest": "^6.0.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint && npm test"
+    }
+  },
+  "engines": {
+    "node": "14.x"
+  }
+}
