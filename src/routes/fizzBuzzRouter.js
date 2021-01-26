@@ -67,11 +67,9 @@ const initFizzBuzzRouter = (db) => {
           let addToString = i.toString();
           if (i % (int1 * int2) === 0) {
             addToString = `${str1}${str2}`;
-          }
-          if (i % int1 === 0) {
+          } else if (i % int1 === 0) {
             addToString = str1;
-          }
-          if (i % int2 === 0) {
+          } else if (i % int2 === 0) {
             addToString = str2;
           }
           stringResultAsArray.push(addToString);
