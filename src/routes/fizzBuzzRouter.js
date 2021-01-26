@@ -26,8 +26,8 @@ const initFizzBuzzRouter = (db) => {
       }
 
       let response = {};
-      const firstTryId = `${int1}${int2}${str1}${str2}`;
-      const secondTryId = `${int2}${int1}${str2}${str1}`;
+      const firstTryId = `{${int1}}{${int2}}{${str1}}{${str2}}`;
+      const secondTryId = `{${int2}}{${int1}}{${str2}}{${str1}}`;
       let correspondingId = firstTryId;
       let updatedRequest;
 
@@ -36,7 +36,7 @@ const initFizzBuzzRouter = (db) => {
         .collection('fizzbuzz')
         .findOneAndUpdate({ _id: firstTryId }, { $inc: { count: 1 } }, { returnOriginal: false });
 
-      // Try to retrieve request by inverting params sincce results would be similar
+      // Try to retrieve request by inverting params since results would be similar
       if (!updatedRequest.value) {
         correspondingId = secondTryId;
         updatedRequest = await db
@@ -56,7 +56,7 @@ const initFizzBuzzRouter = (db) => {
         response = { code: 200, body: { stringResult } };
       } else if (updatedRequest.value && limit < updatedRequest.value.limit) {
         // If limit is lower
-        stringResult = updatedRequest.value.stringResultAsArray.splice(0, limit).join('');
+        stringResult = updatedRequest.value.stringResultAsArray.splice(0, limit).join(',');
         response = { code: 200, body: { stringResult } };
       } else {
         // If limit is higher or request does not exist
@@ -73,8 +73,9 @@ const initFizzBuzzRouter = (db) => {
             addToString = str2;
           }
           stringResultAsArray.push(addToString);
-          stringResult += addToString;
         }
+
+        stringResult = stringResultAsArray.join(',');
 
         if (updatedRequest.value) {
           await db

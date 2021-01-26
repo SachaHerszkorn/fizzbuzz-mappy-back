@@ -46,9 +46,11 @@ describe('Cats router testing', () => {
     const response = await request(app)
       .post('/fizzbuzz')
       .send({ limit: 15, int1: 3, int2: 5, str1: 'fizz', str2: 'buzz' });
-    const expectedMostFrequentRequestId = '35fizzbuzz';
+    const expectedMostFrequentRequestId = '{3}{5}{fizz}{buzz}';
 
-    expect(response.body.stringResult).toBe('12fizz4buzzfizz78fizzbuzz11fizz1314fizzbuzz');
+    expect(response.body.stringResult).toBe(
+      '1,2,fizz,4,buzz,fizz,7,8,fizz,buzz,11,fizz,13,14,fizzbuzz'
+    );
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.mostFrequentRequests[0]._id).toBe(expectedMostFrequentRequestId);
     expect(response.status).toBe(201);
@@ -58,9 +60,11 @@ describe('Cats router testing', () => {
     const response = await request(app)
       .post('/fizzbuzz')
       .send({ limit: 15, int2: 3, int1: 5, str2: 'fizz', str1: 'buzz' });
-    const expectedMostFrequentRequestId = '35fizzbuzz';
+    const expectedMostFrequentRequestId = '{3}{5}{fizz}{buzz}';
 
-    expect(response.body.stringResult).toBe('12fizz4buzzfizz78fizzbuzz11fizz1314fizzbuzz');
+    expect(response.body.stringResult).toBe(
+      '1,2,fizz,4,buzz,fizz,7,8,fizz,buzz,11,fizz,13,14,fizzbuzz'
+    );
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.mostFrequentRequests[0]._id).toBe(expectedMostFrequentRequestId);
     expect(response.status).toBe(200);
@@ -70,9 +74,9 @@ describe('Cats router testing', () => {
     const response = await request(app)
       .post('/fizzbuzz')
       .send({ limit: 10, int1: 3, int2: 5, str1: 'fizz', str2: 'buzz' });
-    const expectedMostFrequentRequestId = '35fizzbuzz';
+    const expectedMostFrequentRequestId = '{3}{5}{fizz}{buzz}';
 
-    expect(response.body.stringResult).toBe('12fizz4buzzfizz78fizzbuzz');
+    expect(response.body.stringResult).toBe('1,2,fizz,4,buzz,fizz,7,8,fizz,buzz');
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.mostFrequentRequests[0]._id).toBe(expectedMostFrequentRequestId);
     expect(response.status).toBe(200);
@@ -82,10 +86,10 @@ describe('Cats router testing', () => {
     const response = await request(app)
       .post('/fizzbuzz')
       .send({ limit: 20, int1: 3, int2: 5, str1: 'fizz', str2: 'buzz' });
-    const expectedMostFrequentRequestId = '35fizzbuzz';
+    const expectedMostFrequentRequestId = '{3}{5}{fizz}{buzz}';
 
     expect(response.body.stringResult).toBe(
-      '12fizz4buzzfizz78fizzbuzz11fizz1314fizzbuzz1617fizz19buzz'
+      '1,2,fizz,4,buzz,fizz,7,8,fizz,buzz,11,fizz,13,14,fizzbuzz,16,17,fizz,19,buzz'
     );
     // eslint-disable-next-line no-underscore-dangle
     expect(response.body.mostFrequentRequests[0]._id).toBe(expectedMostFrequentRequestId);
@@ -101,8 +105,8 @@ describe('Cats router testing', () => {
       .send({ limit: 15, int1: 4, int2: 5, str1: 'fizz', str2: 'buzz' });
     const response = await request(app).get('/fizzbuzz/stats');
 
-    const expectedMostFrequentRequestId = '35fizzbuzz';
-    const expectedSecondMostFrequentRequestId = '45fizzbuzz';
+    const expectedMostFrequentRequestId = '{3}{5}{fizz}{buzz}';
+    const expectedSecondMostFrequentRequestId = '{4}{5}{fizz}{buzz}';
     expect(response.body[0]._id).toBe(expectedMostFrequentRequestId);
     expect(response.body[1]._id).toBe(expectedSecondMostFrequentRequestId);
     expect(response.status).toBe(200);
